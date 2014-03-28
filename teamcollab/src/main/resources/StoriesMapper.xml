@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.ritikk.teamcollab.mappers.StoriesMapper'>
+
+	<resultMap type='Story' id='storiesResult'>
+		<id property='storyID' column='StoryID' />
+		<result property='title' column='Title' />
+		<result property='description' column='Description' />
+		<result property='estimate' column='Estimate' />
+		<result property='actual' column='Actual'/>
+		<result property='assignedTo' column='AssignedTo' />
+		<result property='projectID' column='ProjectID' />
+	</resultMap>
+
+	<select id='getStoriesByProjectID' parameterType='int' resultMap='storiesResult'>
+		SELECT * FROM Stories WHERE ProjectID = #{projectID}
+	</select>
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.ritikk.teamcollab.mappers.MembersMapper'>
+
+	<resultMap type='Member' id='membersResult'>
+		<id property='memberID' column='MemberID' />
+		<result property='username' column='Username' />
+		<result property='password' column='Password' />
+		<result property='firstName' column='FirstName' />
+		<result property='lastName' column='LastName'/>
+		<result property='organizationID' column='OrganizationID' />
+	</resultMap>
+
+	<select id='getMembersByOrganizationID' parameterType='int' resultMap='membersResult'>
+		SELECT * FROM Members WHERE OrganizationID = #{organizationID}
+	</select>
+
+</mapper>

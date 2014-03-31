@@ -3,7 +3,7 @@ package com.ritikk.teamcollab.domain;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Member {
+public class Member{
 	private int memberID;
 	private String username;
 	private String password;
@@ -47,4 +47,5 @@ public class Member {
 	public void setOrganizationID(int organizationID) {
 		this.organizationID = organizationID;
 	}
+	
 }

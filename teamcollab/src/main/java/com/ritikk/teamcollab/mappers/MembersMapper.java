@@ -6,4 +6,5 @@ import com.ritikk.teamcollab.domain.Member;
 
 public interface MembersMapper {
 	public List<Member> getMembersByOrganizationID(int organizationID);
+	public Member loadUserByUsername(String username);
 }

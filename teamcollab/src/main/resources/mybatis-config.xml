@@ -11,6 +11,7 @@
 			alias='Project'></typeAlias>
 		<typeAlias type='com.ritikk.teamcollab.domain.Member' alias='Member' />
 		<typeAlias type="com.ritikk.teamcollab.domain.Story" alias="Story"/>
+		<typeAlias type="com.ritikk.teamcollab.domain.ProjectMembership" alias="ProjectMembership"/>
 	</typeAliases>
 	<environments default='development'>
 		<environment id='development'>
@@ -28,5 +29,6 @@
 		<mapper resource="ProjectsMapper.xml" />
 		<mapper resource='MembersMapper.xml' />
 		<mapper resource="StoriesMapper.xml" />
+		<mapper resource="ProjectMembershipsMapper.xml"/>
 	</mappers>
 </configuration>

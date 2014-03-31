@@ -6,8 +6,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ProjectMembership {
 	private int organizationID;
 	private int projectID;
-	private int memberID;
+	private String username;
 	private boolean hasWriteAccess;
+	
+	public ProjectMembership(int organizationID, int projectID, String username,
+			boolean hasWriteAccess) {
+		this.organizationID = organizationID;
+		this.projectID = projectID;
+		this.username = username;
+		this.hasWriteAccess = hasWriteAccess;
+	}
+	
 	public int getOrganizationID() {
 		return organizationID;
 	}
@@ -20,11 +29,11 @@ public class ProjectMembership {
 	public void setProjectID(int projectID) {
 		this.projectID = projectID;
 	}
-	public int getMemberID() {
-		return memberID;
+	public String getUsername() {
+		return username;
 	}
-	public void setMemberID(int memberID) {
-		this.memberID = memberID;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public boolean isHasWriteAccess() {
 		return hasWriteAccess;

@@ -4,8 +4,26 @@
 
 <mapper namespace='com.ritikk.teamcollab.mappers.ProjectMembershipsMapper'>
 
-	<select id='isUserPermitted' parameterType='ProjectMembership' resultType='boolean'>
-		SELECT * FROM Members WHERE OrganizationID = #{organizationID}
+	<select id='isUserPermitted' parameterType='ProjectMembership'
+		resultType='boolean'>
+		SELECT CASE WHEN COUNT(*) > 0 THEN 'true' ELSE 'false' END
+		FROM ProjectMemberships
+		PM
+		INNER JOIN Members M ON PM.MemberID = M.MemberID
+		<where>
+			<if test="username != null">
+				M.Username = #{username}
+			</if>
+			<if test="organizationID != 0">
+				AND PM.OrganizationID = #{organizationID} OR PM.OrganizationID IS NULL
+			</if>
+			<if test="projectID != 0">
+				AND PM.ProjectID = #{projectID} OR PM.ProjectID IS NULL
+			</if>
+			<if test="hasWriteAccess == true">
+				AND PM.HasWriteAccess = 1
+			</if>
+		</where>
 	</select>
 
 </mapper>

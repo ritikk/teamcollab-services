@@ -16,5 +16,9 @@
 	<select id='getMembersByOrganizationID' parameterType='int' resultMap='membersResult'>
 		SELECT * FROM Members WHERE OrganizationID = #{organizationID}
 	</select>
+	
+	<select id="loadUserByUsername" parameterType='String' resultMap='membersResult'>
+		SELECT * FROM Members WHERE Username = #{username}
+	</select>
 
 </mapper>

@@ -4,52 +4,48 @@
 
 <mapper namespace='com.ritikk.teamcollab.mappers.OrganizationsMapper'>
 
-<!-- 	<select id='getEmployeeById' parameterType='int' -->
-<!-- 		resultMap='employeeResult'> -->
-<!-- 		SELECT -->
-<!-- 		* -->
-<!-- 		FROM EMPLOYEE -->
-<!-- 		WHERE id = #{employeeId} -->
-<!-- 	</select> -->
-	<!-- Instead of referencing Fully Qualified Class Names we can register 
-		Aliases in mybatis-config.xml and use Alias names. -->
 	<resultMap type='Organization' id='organizationsResult'>
 		<id property='organizationId' column='OrganizationId' />
 		<result property='name' column='Name' />
 	</resultMap>
 
-	<select id='getAllOrganizations' resultMap='organizationsResult'>
-		SELECT * FROM Organizations
+	<select id='getOrganizationByID' parameterType='int'
+		resultMap='organizationsResult'>
+		SELECT
+		*
+		FROM Organizations
+		WHERE OrganizationId =
+		#{organizationID}
 	</select>
 
-<!-- 	<insert id='insertEmployee' parameterType='Employee' -->
-<!-- 		useGeneratedKeys='true' keyProperty='id'> -->
-<!-- 		INSERT INTO `EMPLOYEE` -->
-<!-- 		(`id`, -->
-<!-- 		`first_name`, -->
-<!-- 		`last_name`, -->
-<!-- 		`salary`) -->
-<!-- 		VALUES -->
-<!-- 		( -->
-<!-- 		#{id}, -->
-<!-- 		#{firstName}, -->
-<!-- 		#{lastName}, -->
-<!-- 		#{salary} -->
-<!-- 		) -->
-<!-- 	</insert> -->
+	<select id='getAllOrganizations' resultMap='organizationsResult'>
+		SELECT * FROM
+		Organizations
+	</select>
 
-<!-- 	<update id='updateEmployee' parameterType='Employee'> -->
-<!-- 		UPDATE `EMPLOYEE` -->
-<!-- 		SET -->
-<!-- 		`first_name` = #{firstName}, -->
-<!-- 		`last_name` = #{lastName}, -->
-<!-- 		`salary` = #{salary} -->
-<!-- 		WHERE `id` = #{id} -->
-<!-- 	</update> -->
+	<insert id='insertOrganization' parameterType='Organization'
+		useGeneratedKeys='true' keyProperty='organizationId'>
+		INSERT INTO
+		Organizations
+		(
+		Name
+		)
+		VALUES
+		(
+		#{name}
+		);
+	</insert>
 
-<!-- 	<delete id='deleteEmployee' parameterType='int'> -->
-<!-- 		DELETE FROM EMPLOYEE WHERE -->
-<!-- 		`id` = #{id} -->
-<!-- 	</delete> -->
+	<update id='updateOrganization' parameterType='Organization'>
+	UPDATE Organizations
+	SET
+	Name = #{name}
+	WHERE OrganizationId = #{organizationId}
+	</update>
+
+	<delete id='deleteOrganization' parameterType='int'>
+	DELETE FROM Organizations WHERE
+	OrganizationId = #{organizationID}
+	</delete>
 
 </mapper>

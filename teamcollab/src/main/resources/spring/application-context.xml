@@ -21,6 +21,11 @@
 		<property name="mapper" ref="organizationsMapper"></property>
 	</bean>
 
+	<bean id="projectsResource" class="com.ritikk.teamcollab.services.ProjectsResource"></bean>
+	<bean id="projectsDaoImpl" class="com.ritikk.teamcollab.dao.ProjectsDaoImpl">
+		<property name="mapper" ref="projectsMapper"></property>
+	</bean>
+
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -56,5 +61,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
 			value="com.ritikk.teamcollab.mappers.MembersMapper" />
+	</bean>
+	<bean id="projectsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+		<property name="mapperInterface"
+			value="com.ritikk.teamcollab.mappers.ProjectsMapper" />
 	</bean>
 </beans>

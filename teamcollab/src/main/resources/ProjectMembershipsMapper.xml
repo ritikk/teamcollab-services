@@ -7,18 +7,20 @@
 	<select id='isUserPermitted' parameterType='ProjectMembership'
 		resultType='boolean'>
 		SELECT CASE WHEN COUNT(*) > 0 THEN 'true' ELSE 'false' END
-		FROM ProjectMemberships
-		PM
-		INNER JOIN Members M ON PM.MemberID = M.MemberID
+		FROM ProjectMemberships PM
+		INNER JOIN Members M ON PM.MemberID = M.MemberID AND M.Username = #{username}
+		LEFT OUTER JOIN Projects P ON P.ProjectID = PM.ProjectID 
 		<where>
-			<if test="username != null">
-				M.Username = #{username}
+			<if test="organizationID == 0 and projectID == 0">
+				PM.OrganizationID IS NULL
 			</if>
 			<if test="organizationID != 0">
-				AND PM.OrganizationID = #{organizationID} OR PM.OrganizationID IS NULL
+				(PM.OrganizationID = #{organizationID} OR PM.OrganizationID IS NULL)
 			</if>
 			<if test="projectID != 0">
-				AND PM.ProjectID = #{projectID} OR PM.ProjectID IS NULL
+				AND (PM.ProjectID = #{projectID} 
+				    OR (P.OrganizationID = PM.OrganizationID AND PM.ProjectID IS NULL) 
+				    OR (PM.ProjectID IS NULL AND PM.OrganizationID IS NULL))
 			</if>
 			<if test="hasWriteAccess == true">
 				AND PM.HasWriteAccess = 1

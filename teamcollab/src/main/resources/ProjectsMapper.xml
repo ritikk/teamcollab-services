@@ -7,11 +7,54 @@
 	<resultMap type='Project' id='projectsResult'>
 		<id property='projectID' column='ProjectID' />
 		<result property='name' column='Name' />
-		<result property="organizationID" column="OrganizationID"/>
+		<result property="organizationID" column="OrganizationID" />
 	</resultMap>
 
 	<select id='getAllProjects' resultMap='projectsResult'>
 		SELECT * FROM Projects
 	</select>
+
+	<select id="getProjectsByUsername" resultMap="projectsResult" parameterType="String">
+		SELECT * FROM
+		Projects P
+		LEFT OUTER JOIN ProjectMemberships PM
+		ON P.ProjectID = PM.ProjectID
+		OR (P.OrganizationID = PM.OrganizationID AND PM.ProjectID IS NULL)
+		OR PM.OrganizationID = NULL
+		INNER JOIN Members M
+		ON M.MemberID = PM.MemberID AND M.Username = #{username}
+	</select>
+	
+	<select id="getProjectByID" resultMap="projectsResult" parameterType="int">
+		SELECT * FROM Projects WHERE ProjectID = #{projectID}
+	</select>
+	
+	<insert id='insertProject' parameterType='Project'
+		useGeneratedKeys='true' keyProperty='projectID'>
+		INSERT INTO
+		Projects
+		(
+		Name,
+		OrganizationID
+		)
+		VALUES
+		(
+		#{name},
+		#{organizationID}
+		);
+	</insert>
+
+	<update id='updateProject' parameterType='Project'>
+	UPDATE Projects
+	SET
+	Name = #{name},
+	OrganizationID = #{organizationID}
+	WHERE ProjectID = #{projectID}
+	</update>
+
+	<delete id='deleteProject' parameterType='int'>
+	DELETE FROM Projects WHERE
+	ProjectID = #{projectID}
+	</delete>
 
 </mapper>

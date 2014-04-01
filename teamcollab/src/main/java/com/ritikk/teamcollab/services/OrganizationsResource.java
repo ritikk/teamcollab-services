@@ -92,7 +92,7 @@ public class OrganizationsResource {
 	public Organization getOrganization(
 			@PathParam("organizationID") int organizationID) {
 		String name = securityContext.getUserPrincipal().getName();
-		ProjectMembership m = new ProjectMembership(0, 0, name, false);
+		ProjectMembership m = new ProjectMembership(organizationID, 0, name, false);
 		if (!membershipsDao.isUserPermitted(m)) {
 			// Forbidden
 			Response denied = Response.status(Response.Status.FORBIDDEN)
@@ -141,16 +141,17 @@ public class OrganizationsResource {
 	@Consumes(MediaType.APPLICATION_XML)
 	public Response postOrganization(JAXBElement<Organization> organization)
 			throws URISyntaxException {
+		
+		Organization org = organization.getValue();
+		
 		String name = securityContext.getUserPrincipal().getName();
-		ProjectMembership m = new ProjectMembership(0, 0, name, true);
+		ProjectMembership m = new ProjectMembership(org.getOrganizationId(), 0, name, true);
 		if (!membershipsDao.isUserPermitted(m)) {
 			// Forbidden
 			Response denied = Response.status(Response.Status.FORBIDDEN)
 					.entity("Permission Denied").build();
 			throw new WebApplicationException(denied);
 		}
-
-		Organization org = organization.getValue();
 		
 		int result = dao.updateOrganization(org);
 		
@@ -164,7 +165,7 @@ public class OrganizationsResource {
 	@Path("{organizationID}")
 	public Response deleteOrganization(@PathParam("organizationID") int organizationID) {
 		String name = securityContext.getUserPrincipal().getName();
-		ProjectMembership m = new ProjectMembership(0, 0, name, true);
+		ProjectMembership m = new ProjectMembership(organizationID, 0, name, true);
 		if (!membershipsDao.isUserPermitted(m)) {
 			// Forbidden
 			Response denied = Response.status(Response.Status.FORBIDDEN)

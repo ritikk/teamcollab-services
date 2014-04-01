@@ -1,7 +1,6 @@
 package com.ritikk.teamcollab.dao;
 
 import org.apache.ibatis.session.SqlSession;
-
 import com.ritikk.teamcollab.domain.ProjectMembership;
 import com.ritikk.teamcollab.mappers.ProjectMembershipsMapper;
 

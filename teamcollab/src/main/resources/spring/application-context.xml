@@ -11,4 +11,7 @@
 	<context:component-scan base-package="com.ritikk.teamcollab" />
  
  	<bean id="myBatisUserService" class="com.ritikk.teamcollab.dao.MyBatisUserService"></bean>
+ 	<bean id="projectMembershipsDaoImpl" class="com.ritikk.teamcollab.dao.ProjectMembershipsDaoImpl"></bean>
+ 	<bean id="organizationsResource" class="com.ritikk.teamcollab.services.OrganizationsResource"></bean>
+ 	<bean id="organizationsDaoImpl" class="com.ritikk.teamcollab.dao.OrganizationsDaoImpl"></bean>
 </beans>

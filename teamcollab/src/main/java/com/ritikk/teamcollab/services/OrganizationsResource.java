@@ -21,8 +21,8 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import com.ritikk.teamcollab.dao.OrganizationsDao;
-import com.ritikk.teamcollab.dao.OrganizationsDaoImpl;
 import com.ritikk.teamcollab.dao.ProjectMembershipsDaoImpl;
 import com.ritikk.teamcollab.domain.Organization;
 import com.ritikk.teamcollab.domain.ProjectMembership;
@@ -38,12 +38,13 @@ public class OrganizationsResource {
 	@Context
 	SecurityContext securityContext;
 
+	@Autowired
 	private ProjectMembershipsDaoImpl membershipsDao;
+	@Autowired
 	private OrganizationsDao dao;
 
 	public OrganizationsResource() {
-		this.dao = new OrganizationsDaoImpl();
-		this.membershipsDao = new ProjectMembershipsDaoImpl();
+		
 	}
 
 	// GET

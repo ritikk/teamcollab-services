@@ -20,7 +20,7 @@
 		LEFT OUTER JOIN ProjectMemberships PM
 		ON P.ProjectID = PM.ProjectID
 		OR (P.OrganizationID = PM.OrganizationID AND PM.ProjectID IS NULL)
-		OR PM.OrganizationID = NULL
+		OR (PM.OrganizationID IS NULL AND PM.ProjectID IS NULL)
 		INNER JOIN Members M
 		ON M.MemberID = PM.MemberID AND M.Username = #{username}
 	</select>

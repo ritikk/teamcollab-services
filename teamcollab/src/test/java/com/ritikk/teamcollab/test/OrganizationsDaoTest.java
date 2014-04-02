@@ -16,6 +16,12 @@ import com.ritikk.teamcollab.dao.OrganizationsDaoImpl;
 import com.ritikk.teamcollab.domain.Organization;
 import com.ritikk.teamcollab.mappers.TeamCollabMapper;
 
+/**
+ * This class unit tests the OrganizationsDao
+ * Mapper is mocked using Mockito
+ * @author ritik
+ *
+ */
 public class OrganizationsDaoTest {
 
 	private OrganizationsDao dao;
@@ -23,6 +29,10 @@ public class OrganizationsDaoTest {
 	@Mock
 	private TeamCollabMapper mapper;
 
+	/**
+	 * This method sets up the unit test and the mock object
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -34,7 +44,9 @@ public class OrganizationsDaoTest {
 		when(mapper.getAllOrganizations()).thenReturn(mockedList);
 		when(mapper.getOrganizationByID(1)).thenReturn(
 				new Organization(1, "Cybage"));
-
+		when(mapper.insertOrganization(any(Organization.class))).thenReturn(2);
+		when(mapper.updateOrganization(any(Organization.class))).thenReturn(1);
+		
 		OrganizationsDaoImpl impl = new OrganizationsDaoImpl();
 		impl.setMapper(mapper);
 		dao = impl;
@@ -54,5 +66,27 @@ public class OrganizationsDaoTest {
 		assertNotNull(org);
 		assertEquals(1, org.getOrganizationId());
 		assertEquals("Cybage", org.getName());
+	}
+	
+	@Test
+	public void testInsertOrganization() {
+		Organization org = new Organization(0, "Evolving Sols");
+		dao.insertOrganization(org);
+		verify(mapper).insertOrganization(org);
+	}
+	
+	@Test
+	public void testUpdateOrganization() {
+		Organization org = dao.getOrganizationByID(1);
+		org.setName("Cybage Software");
+		int result = dao.updateOrganization(org);
+		assertNotEquals(0, result);		
+	}
+	
+	@Test
+	public void testDeleteOrganization() {
+		Organization org = dao.getOrganizationByID(1);
+		dao.deleteOrganization(org.getOrganizationId());
+		verify(mapper).deleteOrganization(org.getOrganizationId());
 	}
 }

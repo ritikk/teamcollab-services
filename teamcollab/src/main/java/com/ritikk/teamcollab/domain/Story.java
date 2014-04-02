@@ -2,6 +2,11 @@ package com.ritikk.teamcollab.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * This class defines a Story resource
+ * @author ritik
+ *
+ */
 @XmlRootElement
 public class Story {
 

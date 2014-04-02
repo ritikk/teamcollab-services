@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN'
+  'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.ritikk.teamcollab.mappers.TeamCollabMapper'>
+
+	<resultMap type='Organization' id='organizationsResult'>
+		<id property='organizationId' column='OrganizationId' />
+		<result property='name' column='Name' />
+	</resultMap>
+
+	<select id='getOrganizationByID' parameterType='int'
+		resultMap='organizationsResult'>
+		SELECT
+		*
+		FROM Organizations
+		WHERE OrganizationId =
+		#{organizationID}
+	</select>
+
+	<select id='getAllOrganizations' resultMap='organizationsResult'>
+		SELECT * FROM
+		Organizations
+	</select>
+
+	<insert id='insertOrganization' parameterType='Organization'
+		useGeneratedKeys='true' keyProperty='organizationId'>
+		INSERT INTO
+		Organizations
+		(
+		Name
+		)
+		VALUES
+		(
+		#{name}
+		);
+	</insert>
+
+	<update id='updateOrganization' parameterType='Organization'>
+		UPDATE Organizations
+		SET
+		Name = #{name}
+		WHERE OrganizationId = #{organizationId}
+	</update>
+
+	<delete id='deleteOrganization' parameterType='int'>
+		DELETE FROM Organizations WHERE
+		OrganizationId = #{organizationID}
+	</delete>
+
+	<select id='isUserPermitted' parameterType='ProjectMembership'
+		resultType='boolean'>
+		SELECT CASE WHEN COUNT(*) > 0 THEN 'true' ELSE 'false' END
+		FROM
+		ProjectMemberships PM
+		INNER JOIN Members M ON PM.MemberID = M.MemberID
+		AND M.Username = #{username}
+		LEFT OUTER JOIN Projects P ON P.ProjectID
+		= PM.ProjectID
+		<where>
+			<if test="organizationID == 0 and projectID == 0">
+				PM.OrganizationID IS NULL
+			</if>
+			<if test="organizationID != 0">
+				(PM.OrganizationID = #{organizationID} OR
+				PM.OrganizationID IS NULL)
+			</if>
+			<if test="projectID != 0">
+				AND (PM.ProjectID = #{projectID}
+				OR (P.OrganizationID = PM.OrganizationID AND PM.ProjectID IS NULL)
+				OR (PM.ProjectID IS NULL AND PM.OrganizationID IS NULL))
+			</if>
+			<if test="hasWriteAccess == true">
+				AND PM.HasWriteAccess = 1
+			</if>
+		</where>
+	</select>
+
+	<resultMap type='Project' id='projectsResult'>
+		<id property='projectID' column='ProjectID' />
+		<result property='name' column='Name' />
+		<result property="organizationID" column="OrganizationID" />
+	</resultMap>
+
+	<select id='getAllProjects' resultMap='projectsResult'>
+		SELECT * FROM Projects
+	</select>
+
+	<select id="getProjectsByUsername" resultMap="projectsResult"
+		parameterType="String">
+		SELECT * FROM
+		Projects P
+		LEFT OUTER JOIN
+		ProjectMemberships PM
+		ON P.ProjectID = PM.ProjectID
+		OR (P.OrganizationID
+		= PM.OrganizationID AND PM.ProjectID IS NULL)
+		OR (PM.OrganizationID IS
+		NULL AND PM.ProjectID IS NULL)
+		INNER JOIN Members M
+		ON M.MemberID =
+		PM.MemberID AND M.Username = #{username}
+	</select>
+
+	<select id="getProjectByID" resultMap="projectsResult"
+		parameterType="int">
+		SELECT * FROM Projects WHERE ProjectID = #{projectID}
+	</select>
+
+	<insert id='insertProject' parameterType='Project'
+		useGeneratedKeys='true' keyProperty='projectID'>
+		INSERT INTO
+		Projects
+		(
+		Name,
+		OrganizationID
+		)
+		VALUES
+		(
+		#{name},
+		#{organizationID}
+		);
+	</insert>
+
+	<update id='updateProject' parameterType='Project'>
+		UPDATE Projects
+		SET
+		Name = #{name},
+		OrganizationID = #{organizationID}
+		WHERE ProjectID = #{projectID}
+	</update>
+
+	<delete id='deleteProject' parameterType='int'>
+		DELETE FROM Projects WHERE
+		ProjectID = #{projectID}
+	</delete>
+
+	<resultMap type='Member' id='membersResult'>
+		<id property='memberID' column='MemberID' />
+		<result property='username' column='Username' />
+		<result property='password' column='Password' />
+		<result property='firstName' column='FirstName' />
+		<result property='lastName' column='LastName' />
+		<result property='organizationID' column='OrganizationID' />
+	</resultMap>
+
+	<select id='getMembersByOrganizationID' parameterType='int'
+		resultMap='membersResult'>
+		SELECT * FROM Members WHERE OrganizationID =
+		#{organizationID}
+	</select>
+
+	<select id="loadUserByUsername" parameterType='String'
+		resultMap='membersResult'>
+		SELECT * FROM Members WHERE Username = #{username}
+	</select>
+
+	<resultMap type='Story' id='storiesResult'>
+		<id property='storyID' column='StoryID' />
+		<result property='title' column='Title' />
+		<result property='description' column='Description' />
+		<result property='estimate' column='Estimate' />
+		<result property='actual' column='Actual' />
+		<result property='assignedTo' column='AssignedTo' />
+		<result property='projectID' column='ProjectID' />
+	</resultMap>
+
+	<select id='getStoriesByProjectID' parameterType='int'
+		resultMap='storiesResult'>
+		SELECT * FROM Stories WHERE ProjectID = #{projectID}
+	</select>
+
+</mapper>

@@ -11,19 +11,29 @@
 	<context:component-scan base-package="com.ritikk.teamcollab" />
 
 	<bean id="myBatisUserService" class="com.ritikk.teamcollab.dao.MyBatisUserService">
-		<property name="mapper" ref="membersMapper"></property>
+		<property name="mapper" ref="teamCollabMapper"></property>
 	</bean>
 	<bean id="projectMembershipsDaoImpl" class="com.ritikk.teamcollab.dao.ProjectMembershipsDaoImpl">
-		<property name="mapper" ref="projectMembershipsMapper"></property>
+		<property name="mapper" ref="teamCollabMapper"></property>
 	</bean>
 	<bean id="organizationsResource" class="com.ritikk.teamcollab.services.OrganizationsResource"></bean>
 	<bean id="organizationsDaoImpl" class="com.ritikk.teamcollab.dao.OrganizationsDaoImpl">
-		<property name="mapper" ref="organizationsMapper"></property>
+		<property name="mapper" ref="teamCollabMapper"></property>
 	</bean>
 
 	<bean id="projectsResource" class="com.ritikk.teamcollab.services.ProjectsResource"></bean>
 	<bean id="projectsDaoImpl" class="com.ritikk.teamcollab.dao.ProjectsDaoImpl">
-		<property name="mapper" ref="projectsMapper"></property>
+		<property name="mapper" ref="teamCollabMapper"></property>
+	</bean>
+	
+	<bean id="membersResource" class="com.ritikk.teamcollab.services.MembersResource"></bean>
+	<bean id="membersDaoImpl" class="com.ritikk.teamcollab.dao.MembersDaoImpl">
+		<property name="mapper" ref="teamCollabMapper"></property>
+	</bean>
+	
+	<bean id="storiesResource" class="com.ritikk.teamcollab.services.StoriesResource"></bean>
+	<bean id="storiesDaoImpl" class="com.ritikk.teamcollab.dao.StoriesDaoImpl">
+		<property name="mapper" ref="teamCollabMapper"></property>
 	</bean>
 
 	<bean
@@ -47,24 +57,9 @@
 	</bean>
 
 	<!-- =============== MyBATIS beans configuration ================== -->
-	<bean id="organizationsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="teamCollabMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 		<property name="mapperInterface"
-			value="com.ritikk.teamcollab.mappers.OrganizationsMapper" />
-	</bean>
-	<bean id="projectMembershipsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface"
-			value="com.ritikk.teamcollab.mappers.ProjectMembershipsMapper" />
-	</bean>
-	<bean id="membersMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface"
-			value="com.ritikk.teamcollab.mappers.MembersMapper" />
-	</bean>
-	<bean id="projectsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
-		<property name="mapperInterface"
-			value="com.ritikk.teamcollab.mappers.ProjectsMapper" />
+			value="com.ritikk.teamcollab.mappers.TeamCollabMapper" />
 	</bean>
 </beans>

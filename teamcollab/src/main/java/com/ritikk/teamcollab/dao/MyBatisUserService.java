@@ -9,16 +9,31 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ritikk.teamcollab.domain.Member;
-import com.ritikk.teamcollab.mappers.MembersMapper;
+import com.ritikk.teamcollab.mappers.TeamCollabMapper;
 
+/**
+ * This service is used for authentication of the current user
+ * against the credentials stored in the data store
+ * @author ritik
+ * @see UserDetailsService
+ */
 public class MyBatisUserService implements UserDetailsService {
 
-	private MembersMapper mapper;
+	private TeamCollabMapper mapper;
 
-	public void setMapper(MembersMapper mapper) {
+	/**
+	 * This method injects the mapper to use for interacting with
+	 * the data store
+	 * @param mapper
+	 * @see TeamCollabMapper
+	 */
+	public void setMapper(TeamCollabMapper mapper) {
 		this.mapper = mapper;
 	}
 
+	/**
+	 * This method retrieves user details for a specified username
+	 */
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException, DataAccessException {

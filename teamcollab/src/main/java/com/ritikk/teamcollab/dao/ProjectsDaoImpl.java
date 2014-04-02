@@ -3,12 +3,22 @@ package com.ritikk.teamcollab.dao;
 import java.util.List;
 
 import com.ritikk.teamcollab.domain.Project;
-import com.ritikk.teamcollab.mappers.ProjectsMapper;
+import com.ritikk.teamcollab.mappers.TeamCollabMapper;
 
+/**
+ * Concrete implementation of the ProjectsDao interface
+ * @author ritik
+ * @see ProjectsDao
+ */
 public class ProjectsDaoImpl implements ProjectsDao {
-	private ProjectsMapper mapper;
+	private TeamCollabMapper mapper;
 
-	public void setMapper(ProjectsMapper mapper) {
+	/**
+	 * This method injects the mapper to be used to interact with
+	 * the data store
+	 * @param mapper
+	 */
+	public void setMapper(TeamCollabMapper mapper) {
 		this.mapper = mapper;
 	}
 

@@ -2,22 +2,30 @@ package com.ritikk.teamcollab.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.ritikk.teamcollab.domain.Member;
-import com.ritikk.teamcollab.mappers.MembersMapper;
+import com.ritikk.teamcollab.mappers.TeamCollabMapper;
 
+/**
+ * Concrete implementation for the MembersDao
+ * @author ritik
+ * @see MembersDao
+ */
 public class MembersDaoImpl implements MembersDao {
+
+	private TeamCollabMapper mapper;
+
+	/**
+	 * This method injects the mapper to use for interacting with the DB
+	 * @param mapper TeamCollabMapper
+	 * @see TeamCollabMapper
+	 */
+	public void setMapper(TeamCollabMapper mapper) {
+		this.mapper = mapper;
+	}
 
 	@Override
 	public List<Member> getMembersByOrganizationID(int organizationID) {
-		SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession();
-		try {
-			MembersMapper mapper = session.getMapper(MembersMapper.class);
-			return mapper.getMembersByOrganizationID(organizationID);
-		} finally {
-			session.close();
-		}
+		return mapper.getMembersByOrganizationID(organizationID);
 	}
 
 }

@@ -25,10 +25,6 @@
 <!-- 		</environment> -->
 <!-- 	</environments> -->
 	<mappers>
-		<mapper resource='OrganizationsMapper.xml' />
-		<mapper resource="ProjectsMapper.xml" />
-		<mapper resource='MembersMapper.xml' />
-		<mapper resource="StoriesMapper.xml" />
-		<mapper resource="ProjectMembershipsMapper.xml"/>
+		<mapper resource="TeamCollabMapper.xml" />
 	</mappers>
 </configuration>

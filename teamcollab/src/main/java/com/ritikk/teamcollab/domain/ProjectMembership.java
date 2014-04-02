@@ -2,6 +2,11 @@ package com.ritikk.teamcollab.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * This class defines a member's Project Membership
+ * @author ritik
+ *
+ */
 @XmlRootElement
 public class ProjectMembership {
 	private int organizationID;

@@ -2,6 +2,11 @@ package com.ritikk.teamcollab.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * This class defines a Member resource
+ * @author ritik
+ *
+ */
 @XmlRootElement
 public class Member{
 	private int memberID;
